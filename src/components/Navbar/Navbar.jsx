@@ -1,21 +1,33 @@
-import React, { useEffect, useState } from "react";
 import { animateScroll } from "react-scroll";
 import "./Navbar.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getUser } from "../../auth/AuthService";
+import {
+  getCurrentUser,
+  isAuthenticated,
+  logout,
+} from "../../auth/AuthService";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const Navbar = ({ isAuthenticated, email, logout }) => {
+export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const token = getCurrentUser();
+
   const handleLogout = () => {
-    logout(); // Call the logout function passed from App
-    toast.info("Logged out successfully.");
-    setTimeout(() => {
-      navigate("/login"); // Redirect to login after logout
-    }, 2000);
+    try {
+      localStorage.clear();
+      localStorage.removeItem("token");
+      toast.success("Logged out successfully!");
+      setTimeout(() => {
+        navigate("/", { replace: true });
+        window.location.reload();
+      }, 3000);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleNavClick = (path, section) => {
@@ -61,7 +73,7 @@ export const Navbar = ({ isAuthenticated, email, logout }) => {
             >
               Home
             </a>
-            <a className="nav-link small-nav-item" href="/profile">
+            <a className="nav-link small-nav-item" href="#">
               Survey
             </a>
             <a
@@ -72,7 +84,7 @@ export const Navbar = ({ isAuthenticated, email, logout }) => {
             >
               Profile
             </a>
-            {isAuthenticated ? (
+            {token ? (
               <>
                 <button
                   className="nav-link mx-5 btn btn-link small-nav-item"
@@ -81,7 +93,7 @@ export const Navbar = ({ isAuthenticated, email, logout }) => {
                   Logout
                 </button>
                 <div className="small-nav-item nav-item text-light ms-3">
-                  {email} {/* Render email from response data */}
+                  {token.sub}
                 </div>
               </>
             ) : (

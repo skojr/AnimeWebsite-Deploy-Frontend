@@ -1,39 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "./AuthService"; // Ensure this import is correct
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { register, login } from "./AuthService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Change
 import "./SignUp.css";
 
-export const SignUp = ({ setIsAuthenticated, setEmail }) => {
-  const [password, setPassword] = useState(""); // We only need to manage the password state locally
+export const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
-  // Handle sign up submission
   const handleSignUp = async (e) => {
     e.preventDefault();
-    const email = e.target.email.value; // Get email directly from the form field
-
     try {
-      // First register
-      await register(email, password); // Call the register function
-      toast.success("Signed up successfully!");
-
-      // Set email state in parent component and mark user as authenticated
-      setEmail(email); // Set email in parent
-      setIsAuthenticated(true); // Set the user as authenticated
-
-      // Redirect after registration and reload page
+      await register(email, password);
+      toast.success("Signed up successfully!")
       setTimeout(() => {
         navigate("/", { replace: true });
         window.location.reload();
       }, 3000);
+      const loginResponse = await login(email, password);
+      return loginResponse;
     } catch (error) {
-      console.error(error);
-      toast.error("Registration failed: " + error.message);
+      toast.error("Registration failed" + error);
     }
+
   };
 
   return (
@@ -43,10 +35,7 @@ export const SignUp = ({ setIsAuthenticated, setEmail }) => {
         <form className="form" onSubmit={handleSignUp}>
           <h1 className="form-header">Sign Up</h1>
           <div className="mb-3">
-            <label
-              htmlFor="exampleInputEmail1"
-              className="form-label fs-2 text-dark"
-            >
+            <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
             </label>
             <input
@@ -54,16 +43,13 @@ export const SignUp = ({ setIsAuthenticated, setEmail }) => {
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              name="email" // Make sure the email input has a name attribute to retrieve its value
-              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
+          
           <div className="mb-3">
-            <label
-              htmlFor="exampleInputPassword1"
-              className="form-label fs-2 text-dark"
-            >
+            <label htmlFor="exampleInputPassword1" className="form-label">
               Password
             </label>
             <input
@@ -72,11 +58,10 @@ export const SignUp = ({ setIsAuthenticated, setEmail }) => {
               id="exampleInputPassword1"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
           </div>
 
-          <button type="submit" className="form-btn btn fs-2 mb-5 text-light">
+          <button type="submit" className="form-btn btn btn-primary">
             Sign Up
           </button>
         </form>
