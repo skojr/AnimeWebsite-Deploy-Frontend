@@ -1,34 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register, login, getUser } from "./AuthService";
+import { register } from "./AuthService"; // Ensure this import is correct
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Change
 import "./SignUp.css";
 
-export const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export const SignUp = ({ setIsAuthenticated, setEmail }) => {
+  const [password, setPassword] = useState(""); // We only need to manage the password state locally
   const navigate = useNavigate();
+
+  // Handle sign up submission
   const handleSignUp = async (e) => {
     e.preventDefault();
+    const email = e.target.email.value; // Get email directly from the form field
+
     try {
-      // Optional: check if user already exists
-      // const existingUser = await getUser();
-      // if (existingUser) {
-      //   toast.error("User already registered.");
-      //   return;
-      // }
-  
       // First register
-      await register(email, password);
+      await register(email, password); // Call the register function
       toast.success("Signed up successfully!");
-  
-      // Then login
-      await login(email, password);
-  
-      // Navigate after login succeeds
+
+      // Set email state in parent component and mark user as authenticated
+      setEmail(email); // Set email in parent
+      setIsAuthenticated(true); // Set the user as authenticated
+
+      // Redirect after registration and reload page
       setTimeout(() => {
         navigate("/", { replace: true });
         window.location.reload();
@@ -38,7 +35,6 @@ export const SignUp = () => {
       toast.error("Registration failed: " + error.message);
     }
   };
-  
 
   return (
     <div className="signup-container">
@@ -58,8 +54,8 @@ export const SignUp = () => {
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email" // Make sure the email input has a name attribute to retrieve its value
+              required
             />
           </div>
 
@@ -76,6 +72,7 @@ export const SignUp = () => {
               id="exampleInputPassword1"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 

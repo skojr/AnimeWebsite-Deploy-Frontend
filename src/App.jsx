@@ -53,7 +53,7 @@ function App() {
         />
         <Route path="/about/:animeId" element={<AboutPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} setEmail={setEmail} />} />
         <Route
           path="/profile"
           element={
