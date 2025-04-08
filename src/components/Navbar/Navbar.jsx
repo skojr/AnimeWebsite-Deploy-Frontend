@@ -6,25 +6,9 @@ import { logout, getUser } from "../../auth/AuthService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const Navbar = () => {
-  const [user, setUser] = useState(null);
+export const Navbar = ({isAuthenticated, email}) => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Fetch the authenticated user on mount
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userId = null; // Replace with logic to get the userId if needed.
-        const userData = await getUser(userId);
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setUser(null); // Clear user state if not authenticated
-      }
-    };
-    fetchUser();
-  }, []);
 
   const handleLogout = () => {
     try {
@@ -92,7 +76,7 @@ export const Navbar = () => {
             >
               Profile
             </a>
-            {user ? (
+            {isAuthenticated ? (
               <>
                 <button
                   className="nav-link mx-5 btn btn-link small-nav-item"
@@ -101,7 +85,7 @@ export const Navbar = () => {
                   Logout
                 </button>
                 <div className="small-nav-item nav-item text-light ms-3">
-                  {user.email} {/* Render email from user data */}
+                  {email} {/* Render email from response data */}
                 </div>
               </>
             ) : (

@@ -1,58 +1,60 @@
 import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/Navbar/Navbar";
 import { HomePage } from "./pages/Home/HomePage";
-import { AboutPage } from "./pages/About/AboutPage.jsx";
-import { NotFoundPage } from "./pages/NotFoundPage.jsx";
-import { Login } from "./auth/Login.jsx";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import { SignUp } from "./auth/SignUp.jsx";
-import { Profile } from "./pages/Profile/Profile.jsx";
-import { ProtectedRoutes } from "./auth/ProtectedRoutes.jsx";
-
-const Layout = () => (
-  <>
-    <Navbar />
-    <Outlet />
-  </>
-);
-
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/about/:animeId",
-        element: <AboutPage />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
-      },
-      {
-        path: "/profile",
-        element: (
-          <ProtectedRoutes>
-            <Profile />
-          </ProtectedRoutes>
-        ),
-      },
-    ],
-    errorElement: <NotFoundPage />,
-  },
-]);
+import { AboutPage } from "./pages/About/AboutPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { Login } from "./auth/Login";
+import { SignUp } from "./auth/SignUp";
+import { Profile } from "./pages/Profile/Profile";
+import { ProtectedRoutes } from "./auth/ProtectedRoutes";
+import { checkAuth } from "./api";
 
 function App() {
-  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [email, setEmail] = useState("");
 
-  return <RouterProvider router={router} />;
+  useEffect(() => {
+    const verifyUser = async () => {
+      const data = await checkAuth();
+      setIsAuthenticated(data.loggedIn);
+      setAuthChecked(true);
+      if (isAuthenticated) {
+        setEmail(data.email);
+        console.log(data);
+      } else {
+        console.log("No user authenticated.")
+      }
+    };
+
+    verifyUser();
+  }, []);
+
+  if (!authChecked) return <p>Loading...</p>;
+  return (
+    <BrowserRouter>
+      <Navbar isAuthenticated={isAuthenticated} email={email} />
+      <Routes>
+        <Route
+          path="/"
+          element={<HomePage isAuthenticated={isAuthenticated} />}
+        />
+        <Route path="/about/:animeId" element={<AboutPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoutes isAuthenticated={isAuthenticated}>
+              <Profile />
+            </ProtectedRoutes>
+          }
+        />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

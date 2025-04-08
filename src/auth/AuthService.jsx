@@ -9,6 +9,12 @@ export const apiClient = axios.create({
   withCredentials: true, // Enables sending/receiving cookies
 });
 
+export function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
 
 // Intercept responses to handle expired sessions globally
 apiClient.interceptors.response.use(
@@ -61,6 +67,21 @@ export const register = async (email, password) => {
   }
 };
 
+// Check if user is authenticated
+export const checkAuth = async () => {
+  try {
+    const response = await apiClient.get("api/users/auth/check");
+
+    // You can shape this however you want, but let's assume:
+    // { loggedIn: true, username, userId, role }
+    return response.data;
+  } catch (error) {
+    console.error("Auth check failed:", error.response?.data || error.message);
+    return { loggedIn: false };
+  }
+};
+
+
 
 // User Logout
 export const logout = async () => {
@@ -97,13 +118,6 @@ export const getUser = async () => {
     throw new Error("Failed to fetch user data");
   }
 };
-
-
-export function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
 
 export const updateUser = async (updateData) => {
   try {
