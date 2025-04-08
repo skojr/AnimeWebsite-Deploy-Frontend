@@ -2,7 +2,7 @@ import "./Profile.css";
 import {
   deleteUser,
   updateUser,
-  getUser,
+  getCurrentUser,
   logout, // Fetches current user details
 } from "../../auth/AuthService";
 import { fetchSurveyData } from "./AnimeSurveryService";
