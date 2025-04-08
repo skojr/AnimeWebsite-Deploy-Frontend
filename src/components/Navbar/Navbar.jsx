@@ -2,24 +2,20 @@ import React, { useEffect, useState } from "react";
 import { animateScroll } from "react-scroll";
 import "./Navbar.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { logout, getUser } from "../../auth/AuthService";
+import { getUser } from "../../auth/AuthService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const Navbar = ({isAuthenticated, email}) => {
+export const Navbar = ({ isAuthenticated, email, logout }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleLogout = () => {
-    try {
-      logout(); // Clear session on backend and redirect
-      setTimeout(() => {
-        navigate("/", { replace: true });
-        window.location.reload();
-      }, 3000);
-    } catch (error) {
-      console.error("Logout error:", error.message);
-    }
+    logout(); // Call the logout function passed from App
+    toast.info("Logged out successfully.");
+    setTimeout(() => {
+      navigate("/login"); // Redirect to login after logout
+    }, 2000);
   };
 
   const handleNavClick = (path, section) => {

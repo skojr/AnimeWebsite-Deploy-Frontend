@@ -8,12 +8,23 @@ import { Login } from "./auth/Login";
 import { SignUp } from "./auth/SignUp";
 import { Profile } from "./pages/Profile/Profile";
 import { ProtectedRoutes } from "./auth/ProtectedRoutes";
-import { checkAuth } from "./api";
+import { checkAuth } from "./auth/AuthService";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
   const [email, setEmail] = useState("");
+
+  const logout = async () => {
+    try {
+      // Clear authentication (reset states)
+      setIsAuthenticated(false);
+      setEmail("");
+      window.location.href = "/login"; // Redirect to login page after logout
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -24,7 +35,7 @@ function App() {
         setEmail(data.email);
         console.log(data);
       } else {
-        console.log("No user authenticated.")
+        console.log("No user authenticated.");
       }
     };
 
@@ -34,7 +45,7 @@ function App() {
   if (!authChecked) return <p>Loading...</p>;
   return (
     <BrowserRouter>
-      <Navbar isAuthenticated={isAuthenticated} email={email} />
+      <Navbar isAuthenticated={isAuthenticated} email={email} logout={logout}/>
       <Routes>
         <Route
           path="/"
