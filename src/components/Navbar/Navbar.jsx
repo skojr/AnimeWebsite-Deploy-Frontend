@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getUser } from "../../auth/AuthService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import React, { useState, useEffect } from "react";
 
 export const Navbar = ({ isAuthenticated, email, logout }) => {
   const navigate = useNavigate();
