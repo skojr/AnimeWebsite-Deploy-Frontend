@@ -9,7 +9,7 @@ import { SignUp } from "./auth/SignUp";
 import { Profile } from "./pages/Profile/Profile";
 import { ProtectedRoutes } from "./auth/ProtectedRoutes";
 import { checkAuth } from "./auth/AuthService";
-
+import React, { useState, useEffect } from "react";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
@@ -45,7 +45,7 @@ function App() {
   if (!authChecked) return <p>Loading...</p>;
   return (
     <BrowserRouter>
-      <Navbar isAuthenticated={isAuthenticated} email={email} logout={logout}/>
+      <Navbar isAuthenticated={isAuthenticated} email={email} logout={logout} />
       <Routes>
         <Route
           path="/"
