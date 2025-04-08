@@ -1,0 +1,109 @@
+.hero-container {
+  background-image: url("../../assets/heroImage.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-msg {
+  font-size: 4em;
+  font-weight: bold;
+}
+
+.content-container {
+  position: relative;
+  z-index: 1;
+  padding: 1px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.row {
+  display: flex;
+}
+
+.card {
+  background-color: rgb(31, 29, 31);
+  color: antiquewhite;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card-body {
+  height: 500px; /* Adjusted for responsive height */
+}
+
+.card-container {
+  margin-top: 3%;
+  width: 90%;
+}
+
+.card-title {
+  font-size: 3em;
+  margin-bottom: 15px;
+}
+
+.card-logo {
+  font-size: 3em;
+  margin-bottom: 15px;
+}
+
+.card-info {
+  margin-top: 5%;
+  font-size: 2em;
+}
+
+/* Button Styling */
+.card-btn {
+  width: 80%; /* Reduced width to make it skinnier */
+  height: 100px;
+  font-weight: bold;
+  margin-top: 5%;
+  padding: 15px 10px; /* Increased height and balanced padding */
+  background-color: #7a3f7a; /* Purple button background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.card-btn:hover {
+  background-color: #973b97; /* Lighter purple on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+
+@media (max-width: 767.98px) {
+  .hero-msg {
+    font-size: 2em;
+  }
+
+  .card-container {
+    margin-top: 5%;
+  }
+
+  .card-title,
+  .card-logo,
+  .card-info,
+  .card-btn {
+    font-size: 1em;
+  }
+}

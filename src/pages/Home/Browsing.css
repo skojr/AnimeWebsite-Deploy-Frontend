@@ -1,0 +1,45 @@
+.browsing-container {
+  background-image: url("../../assets/browsingImage.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+
+}
+
+.browsing-msg {
+  font-size: 3.5em;
+  font-weight: bold;
+  margin-top: 5%;
+  margin-bottom: 3%;
+}
+
+.browsing-caption {
+  font-size: 2em;
+  font-weight: bold;
+  color: plum;
+  margin-bottom: 3%;
+}
+
+.content-container {
+  text-align: center;
+  align-items: flex-start;
+  color: white;
+}
+
+.browsing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+}
+
+.carousel-img {
+  width: 350px;
+  height: 500px;
+  margin-bottom: 20%;
+  cursor: pointer;
+}

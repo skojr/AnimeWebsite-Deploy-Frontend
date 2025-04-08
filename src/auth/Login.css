@@ -1,0 +1,80 @@
+.login-container {
+    background-image: url("../assets/loginImage.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.login-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+}
+
+.form-container {
+    margin-top: 5%;
+    z-index: 1;
+    background-color: rgb(226, 225, 226) !important;
+    width: 30%; /* Set a maximum width for the form container */
+    height: 80%; /* Allow the height to adjust based on content */
+    border-radius: 20px;
+    padding: 20px; /* Add padding for spacing inside the container */
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-header {
+    margin-bottom: 10%;
+    font-size: 4rem;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.form {
+    width: 60%; /* Set the form width to 100% to fill the container */
+    margin-top: 10px; /* Add margin for spacing */
+}
+
+.form-control {
+    font-size: 2rem; /* Increase the font size */
+    padding: 10px 15px; /* Increase the padding */
+}
+
+.form-label {
+    font-size: 2rem;
+}
+
+.form-text {
+    font-size: 2rem;
+}
+
+.form-btn {
+    font-size: 2em;
+    border-radius: 35px;
+    width: 100%;
+    background-color: rgb(116, 11, 116);
+    border-color: transparent;
+}
+
+.form-btn:hover {
+    background-color: rgb(158, 6, 185);
+}
+
+.login-text {
+    font-size: 1.5rem;
+}
+

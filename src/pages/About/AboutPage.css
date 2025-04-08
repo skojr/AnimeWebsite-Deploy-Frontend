@@ -1,0 +1,107 @@
+.about-container {
+  background-image: url("../../assets/aboutImage.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Darker overlay for better contrast */
+}
+
+.abt-content-container {
+  width: 85%;
+  max-width: 1200px;
+  z-index: 2;
+}
+
+.abt-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px; /* Spacing between columns */
+}
+
+.col-md-6 {
+  flex: 1;
+  min-width: 350px; /* Ensures better scaling on smaller screens */
+}
+
+.about-image-container,
+.about-synopsis-container {
+  background-color: rgba(20, 24, 34, 0.9); /* Darker tone for improved contrast */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(8px); /* More prominent blur effect */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow-y: auto;
+}
+
+.about-image-container:hover,
+.about-synopsis-container:hover {
+  transform: translateY(-10px); /* Subtle hover effect */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6); /* More pronounced shadow on hover */
+}
+
+.anime-title,
+.synopsis-title {
+  color: #ffcc00; /* Golden-yellow for emphasis */
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.synopsis-text,
+.about-detail {
+  color: #f0f0f0;
+  font-size: 18px;
+  line-height: 1.8; /* Better readability */
+  padding: 20px;
+}
+
+.synopsis-text {
+  text-align: justify;
+}
+
+.anime-image {
+  max-width: 100%;
+  border-radius: 10px;
+  margin: 15px auto;
+  display: block;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .abt-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .about-image-container,
+  .about-synopsis-container {
+    height: auto; /* Allow content to adjust dynamically */
+  }
+
+  .anime-title,
+  .synopsis-title {
+    font-size: 28px;
+  }
+
+  .synopsis-text,
+  .about-detail {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+}
+

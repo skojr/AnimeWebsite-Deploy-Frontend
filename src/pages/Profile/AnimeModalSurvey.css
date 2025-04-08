@@ -1,0 +1,126 @@
+/* General Modal Styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Dark translucent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #1e1e2f; /* Deep dark background */
+  color: #e0e0f1; /* Light text color */
+  padding: 40px 50px; /* Increased padding for spacious look */
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8); /* Stronger shadow for depth */
+  max-width: 600px; /* Increased width */
+  width: 95%;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 2.5rem; /* Larger title font size */
+  font-weight: bold;
+  margin-bottom: 30px; /* Increased spacing below the title */
+  color: #9d84ff; /* Purple accent color */
+}
+
+/* Form Styling */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* More spacing between form elements */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-label {
+  font-size: 1.2rem; /* Larger label font size */
+  margin-bottom: 8px;
+  color: #c5c5e8; /* Subtle light purple */
+}
+
+.form-select {
+  width: 100%;
+  padding: 15px; /* Increased padding for inputs */
+  font-size: 1.2rem; /* Larger input font size */
+  border: 2px solid #9d84ff; /* Purple border */
+  border-radius: 8px; /* Slightly more rounded inputs */
+  background-color: #2b2b40; /* Dark field background */
+  color: #e0e0f1; /* Light text */
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #ae9cff; /* Brighter purple on focus */
+  box-shadow: 0 0 8px rgba(157, 132, 255, 0.8); /* Slight glow effect */
+}
+
+/* Button Styling */
+.btn {
+  padding: 15px 20px; /* Increased button size */
+  font-size: 1.2rem; /* Larger button text */
+  border: none;
+  border-radius: 8px; /* More rounded corners */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #9d84ff; /* Purple button */
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #ae9cff; /* Lighter purple */
+}
+
+.btn-secondary {
+  background-color: #444455; /* Subtle dark gray */
+  color: #c5c5e8;
+}
+
+.btn-secondary:hover {
+  background-color: #5c5c6d; /* Slightly lighter gray */
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px; /* Increased spacing between buttons */
+  justify-content: center;
+  margin-top: 25px; /* More space above buttons */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 20px 30px; /* Adjusted for smaller screens */
+  }
+
+  .modal-title {
+    font-size: 2rem; /* Slightly smaller title font for mobile */
+  }
+
+  .form-label {
+    font-size: 1rem;
+  }
+
+  .form-select {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .btn {
+    padding: 12px 15px;
+    font-size: 1rem;
+  }
+}
