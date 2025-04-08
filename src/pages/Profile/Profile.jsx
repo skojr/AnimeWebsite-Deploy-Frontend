@@ -17,9 +17,6 @@ import pfpImg from '../../assets/pfpImg.jpg';
 
 
 export const Profile = () => {
-  const [user, setUser] = useState(null); // Store user details
-  const [loading, setLoading] = useState(true);
-  const [animeRecommendations, setAnimeRecommendations] = useState([]);
 
   // Modals
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -28,21 +25,21 @@ export const Profile = () => {
 
   const navigate = useNavigate();
 
-  // Fetch user data on component mount
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userData = await getUser(); // Fetch user from API
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        toast.error("Failed to load user data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, []);
+  // // Fetch user data on component mount
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const userData = await getUser(); // Fetch user from API
+  //       setUser(userData);
+  //     } catch (error) {
+  //       console.error("Error fetching user:", error);
+  //       toast.error("Failed to load user data.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchUser();
+  // }, []);
 
   // Handle account deletion
   const handleConfirmDelete = async (password) => {
