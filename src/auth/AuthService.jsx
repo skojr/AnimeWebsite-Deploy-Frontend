@@ -56,11 +56,13 @@ export const register = async (email, password) => {
     );
 
     console.log("Registration successful:", response.data);
+    console.log("Yayyyy")
 
     // The user is already authenticated; tokens are in cookies
     return response.data;
   } catch (error) {
     console.error("Registration error:", error.response?.data || error.message);
+    console.log("Nayyy");
     throw new Error(
       error.response?.data?.message || "Failed to register user"
     );
