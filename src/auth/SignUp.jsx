@@ -14,22 +14,31 @@ export const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      // if (getUser()) {
+      // Optional: check if user already exists
+      // const existingUser = await getUser();
+      // if (existingUser) {
       //   toast.error("User already registered.");
       //   return;
       // }
+  
+      // First register
       await register(email, password);
       toast.success("Signed up successfully!");
+  
+      // Then login
+      await login(email, password);
+  
+      // Navigate after login succeeds
       setTimeout(() => {
         navigate("/", { replace: true });
         window.location.reload();
       }, 3000);
-      const loginResponse = await login(email, password);
-      return loginResponse;
     } catch (error) {
-      toast.error("Registration failed" + error);
+      console.error(error);
+      toast.error("Registration failed: " + error.message);
     }
   };
+  
 
   return (
     <div className="signup-container">

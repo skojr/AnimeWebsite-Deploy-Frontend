@@ -26,7 +26,7 @@ apiClient.interceptors.response.use(
 export const login = async (email, password) => {
   try {
     const response = await apiClient.post(
-      "/users/auth/authenticate",
+      "api/users/auth/authenticate",
       { email, password },
       { withCredentials: true } // Important to include cookies in the request
     );
@@ -44,7 +44,7 @@ export const login = async (email, password) => {
 export const register = async (email, password) => {
   try {
     const response = await apiClient.post(
-      "/users/auth/register",
+      "api/users/auth/register",
       { email, password },
       { withCredentials: true } // Include cookies
     );
@@ -65,7 +65,7 @@ export const register = async (email, password) => {
 // User Logout
 export const logout = async () => {
   try {
-    await apiClient.post("/users/auth/logout", null, {
+    await apiClient.post("api/users/auth/logout", null, {
       withCredentials: true, // To send cookies
     });
 
@@ -84,7 +84,7 @@ export const logout = async () => {
 // Get Current User
 export const getUser = async () => {
   try {
-    const response = await apiClient.get(`/users/getUser`, {
+    const response = await apiClient.get(`api/users/getUser`, {
       withCredentials: true,
     });
 
@@ -110,7 +110,7 @@ export const updateUser = async (updateData) => {
     const csrfToken = getCookie("csrfToken");
 
     const response = await apiClient.put(
-      `/users/updateUser`,
+      `api/users/updateUser`,
       updateData,
       {
         withCredentials: true,
@@ -133,7 +133,7 @@ export const deleteUser = async (password) => {
   try {
     const csrfToken = getCookie("csrfToken");
 
-    const response = await apiClient.delete(`/users/deleteUser`, {
+    const response = await apiClient.delete(`api/users/deleteUser`, {
       data: { password },
       withCredentials: true,
       headers: {
