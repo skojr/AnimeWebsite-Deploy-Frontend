@@ -97,10 +97,6 @@ export const Profile = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading user data...</div>;
-  }
-
   return (
     <div className="profile-container">
       <div className="container">
@@ -114,7 +110,7 @@ export const Profile = () => {
                 </div>
               </div>
               <div className="card-body text-center">
-                <h5 className="card-title mb-4 mt-5">{user.email}</h5>
+                {/* <h5 className="card-title mb-4 mt-5">{user.email}</h5> */}
                 <button
                   className="btn btn-primary custom-btn mb-3 fs-2"
                   onClick={() => setIsUpdateModalOpen(true)}
