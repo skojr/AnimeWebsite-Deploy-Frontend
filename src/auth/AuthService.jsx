@@ -55,19 +55,21 @@ export const register = async (email, password) => {
       { withCredentials: true } // Include cookies
     );
 
+    // Log the entire response to ensure you're getting data back
+    console.log("Full response:", response);
     console.log("Registration successful:", response.data);
-    console.log("Yayyyy")
+    console.log("Yayyyy");
+    console.log("Response Data:", response.data);
 
     // The user is already authenticated; tokens are in cookies
     return response.data;
+
   } catch (error) {
     console.error("Registration error:", error.response?.data || error.message);
-    console.log("Nayyy");
-    throw new Error(
-      error.response?.data?.message || "Failed to register user"
-    );
+    throw new Error(error.response?.data?.message || "Failed to register user");
   }
 };
+
 
 // Check if user is authenticated
 export const checkAuth = async () => {
