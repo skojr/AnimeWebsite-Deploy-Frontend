@@ -31,7 +31,6 @@ const UpdateUserModal = ({ isOpen, onClose, onUpdate, error }) => {
     updateData.newUsername = username;
     updateData.password = password;
     updateData.newPassword = newPassword;
-    console.log(updateData);
     onUpdate(updateData);
   };
 
