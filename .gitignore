@@ -32,3 +32,4 @@ Thumbs.db
 # Optional: If you're using Linux swap files or temporary files
 *.swp
 *.swo
+node_modules/
