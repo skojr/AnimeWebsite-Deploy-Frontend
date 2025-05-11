@@ -1,1 +1,34 @@
+# Environment Variables
 .env
+.env.* 
+
+# Dependencies
+node_modules/
+
+# Build Output
+dist/
+build/
+
+# Vite Cache
+.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor Configs & OS Files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Optional: Mac-specific files
+*.DS_Store
+
+# Optional: If you're using Linux swap files or temporary files
+*.swp
+*.swo

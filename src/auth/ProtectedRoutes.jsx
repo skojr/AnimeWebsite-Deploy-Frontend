@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
+import { isAuthenticated } from "./AuthService"; // Adjust path as needed
 
-export const ProtectedRoutes = ({ isAuthenticated, children }) => {
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
+const ProtectedRoute = ({ children }) => {
+  return isAuthenticated() ? children : <Navigate to="/login" />;
 };
+
+export default ProtectedRoute;

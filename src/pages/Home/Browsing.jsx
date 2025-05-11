@@ -16,14 +16,14 @@ export const Browsing = () => {
         console.log(data);
 
         const uniqueTitles = new Set();
-        let gintamaIncluded = false;
+        let AotIncluded = false;
 
         const filteredAnime = data.data.filter((anime) => {
           const title = anime.title_english || anime.title;
 
           if (title.includes("Attack on Titan")) {
-            if (!gintamaIncluded) {
-              gintamaIncluded = true;
+            if (!AotIncluded) {
+              AotIncluded = true;
               uniqueTitles.add(title);
               return true;
             }

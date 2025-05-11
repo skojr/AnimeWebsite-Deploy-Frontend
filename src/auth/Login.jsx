@@ -1,82 +1,86 @@
 import { useState } from "react";
-import "./Login.css";
-import { login } from "./AuthService";
+import "./Auth.css";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { login } from "./AuthService";
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "username") setUsername(value);
+    if (name === "password") setPassword(value);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
+      await login({ username, password });
       toast.success("Logged in successfully!");
       setTimeout(() => {
-        navigate("/", { replace: true });
-        window.location.reload();
+        navigate("/");
       }, 3000);
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error("Login failed. Please check your credentials.");
+      toast.error("Login failed. Please try again.");
     }
   };
 
-  const handleSignUp = () => {
-    navigate("/signup");
-  };
-
   return (
-    <div className="login-container">
-      <div className="login-overlay"></div>
-      <div className="form-container">
-        <form className="form" onSubmit={handleLogin}>
-          <h1 className="form-header mt-5">Login</h1>
-          <div className="mb-2">
-            <label htmlFor="exampleInputEmail1" className="form-label fs-2 text-dark">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+    <div className="auth-container d-flex justify-content-center align-items-center vh-100">
+      <form
+        onSubmit={handleSubmit}
+        className="p-4 rounded shadow-lg bg-dark text-light"
+        style={{
+          maxWidth: "400px",
+          width: "100%",
+          transform: "scale(1.7)",
+          transformOrigin: "center",
+        }}
+      >
+        <h2 className="text-center mb-4">Login</h2>
 
-          <div className="mb-2">
-            <label htmlFor="exampleInputPassword1" className="form-label fs-2 text-dark">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label fs-5">
+            Username
+          </label>
+          <input
+            onChange={handleChange}
+            name="username"
+            type="text"
+            value={username}
+            id="username"
+            placeholder="Enter username"
+            className="form-control fs-5"
+          />
+        </div>
 
-          <button type="submit" className="form-btn btn fs-2 text-light">
-            Login
-          </button>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label fs-5">
+            Password
+          </label>
+          <input
+            onChange={handleChange}
+            name="password"
+            type="password"
+            value={password}
+            id="password"
+            placeholder="Enter password"
+            className="form-control fs-5"
+          />
+        </div>
 
-          <div className="fs-2 mt-5">Don't have an account?</div>
-          <button
-            type="submit"
-            className="form-btn fs-2 btn mb-5 text-light"
-            onClick={handleSignUp}
-          >
-            Sign Up
-          </button>
-        </form>
-      </div>
-      <ToastContainer position="top-right" autoClose={3000} />
+        <button
+          type="submit"
+          className="btn btn-primary w-100 fs-5"
+        >
+          Login
+        </button>
+      </form>
     </div>
   );
 };

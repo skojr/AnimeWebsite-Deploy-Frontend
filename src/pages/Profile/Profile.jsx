@@ -2,8 +2,8 @@ import "./Profile.css";
 import {
   deleteUser,
   updateUser,
-  getCurrentUser,
-  logout, // Fetches current user details
+  logout,
+  getUser, // Fetches current user details
 } from "../../auth/AuthService";
 import { fetchSurveyData } from "./AnimeSurveryService";
 import { useEffect, useState } from "react";
@@ -13,10 +13,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import UpdateUserModal from "../../auth/UpdateUserModal";
 import AnimeSurveyModal from "./AnimeModalSurvey";
-import pfpImg from '../../assets/pfpImg.jpg';
-
+import pfpImg from "../../assets/pfpImg.jpg";
 
 export const Profile = () => {
+  // Add these at the top inside your component
+  const [user, setUser] = useState(null);
+  const [animeRecommendations, setAnimeRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Modals
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -25,27 +28,28 @@ export const Profile = () => {
 
   const navigate = useNavigate();
 
-  // // Fetch user data on component mount
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const userData = await getUser(); // Fetch user from API
-  //       setUser(userData);
-  //     } catch (error) {
-  //       console.error("Error fetching user:", error);
-  //       toast.error("Failed to load user data.");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
+  // Fetch user data on component mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUser();
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        toast.error("Failed to load user data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
 
   // Handle account deletion
   const handleConfirmDelete = async (password) => {
     try {
       await deleteUser(password); // Call delete API
       toast.success("Account deleted successfully!");
+      logout();
       setTimeout(() => {
         navigate("/", { replace: true });
         window.location.reload();
@@ -64,6 +68,7 @@ export const Profile = () => {
       toast.info(
         "Account updated. Logging out for security reasons. Please log in again."
       );
+      logout();
       setTimeout(() => {
         navigate("/login", { replace: true });
       }, 3000);
@@ -74,20 +79,22 @@ export const Profile = () => {
   };
 
   // Handle survey submission
-  const handleSurveySubmit = async ({genreId, length}) => {
+  const handleSurveySubmit = async ({ genreId, length }) => {
     try {
       const data = await fetchSurveyData(genreId, length); // Fetch survey data
 
       // Filter recommendations based on length
-      const recommendations = data.filter((item) => {
-        const episodes = parseInt(item.episodes, 10);
-        if (isNaN(episodes)) return false;
-        return (
-          (length === "short" && episodes <= 12) ||
-          (length === "medium" && episodes > 12 && episodes <= 24) ||
-          (length === "long" && episodes > 24)
-        );
-      }).slice(0, 5); // Limit to top 5 recommendations
+      const recommendations = data
+        .filter((item) => {
+          const episodes = parseInt(item.episodes, 10);
+          if (isNaN(episodes)) return false;
+          return (
+            (length === "short" && episodes <= 12) ||
+            (length === "medium" && episodes > 12 && episodes <= 24) ||
+            (length === "long" && episodes > 24)
+          );
+        })
+        .slice(0, 5); // Limit to top 5 recommendations
 
       setAnimeRecommendations(recommendations);
       toast.success("Anime recommendations updated!");
@@ -96,6 +103,8 @@ export const Profile = () => {
       toast.error("Failed to fetch anime recommendations.");
     }
   };
+  
+  if (loading) return <div className="text-center mt-5 fs-2">Loading...</div>;
 
   return (
     <div className="profile-container">
@@ -109,8 +118,8 @@ export const Profile = () => {
                   <img src={pfpImg} alt="Profile" />
                 </div>
               </div>
-              <div className="card-body text-center">
-                {/* <h5 className="card-title mb-4 mt-5">{user.email}</h5> */}
+              <div className="card-body text-center mt-5">
+                <h5 className="card-title mb-4 mt-5">Hi {user.username}!</h5>
                 <button
                   className="btn btn-primary custom-btn mb-3 fs-2"
                   onClick={() => setIsUpdateModalOpen(true)}

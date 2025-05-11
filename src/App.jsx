@@ -7,9 +7,8 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { Login } from "./auth/Login";
 import { SignUp } from "./auth/SignUp";
 import { Profile } from "./pages/Profile/Profile";
-import { ProtectedRoutes } from "./auth/ProtectedRoutes";
-import { checkAuth } from "./auth/AuthService";
 import React, { useState, useEffect } from "react";
+import ProtectedRoute from "./auth/ProtectedRoutes";
 function App() {
   return (
     <BrowserRouter>
@@ -19,7 +18,14 @@ function App() {
         <Route path="/about/:animeId" element={<AboutPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

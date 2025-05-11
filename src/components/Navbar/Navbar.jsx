@@ -1,34 +1,24 @@
 import { animateScroll } from "react-scroll";
 import "./Navbar.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  getCurrentUser,
-  isAuthenticated,
-  logout,
-} from "../../auth/AuthService";
 import { useEffect, useState } from "react";
+import { isAuthenticated, logout } from "../../auth/AuthService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { jwtDecode } from "jwt-decode";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const loggedIn = isAuthenticated();
 
-  const token = getCurrentUser();
-
-  const handleLogout = () => {
-    try {
-      localStorage.clear();
-      localStorage.removeItem("token");
-      toast.success("Logged out successfully!");
-      setTimeout(() => {
-        navigate("/", { replace: true });
-        window.location.reload();
-      }, 3000);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  let username = null;
+  if (loggedIn) {
+    const token = localStorage.getItem("token");
+    const decoded = jwtDecode(token);
+    const { sub } = decoded;
+    username = sub;
+  }
 
   const handleNavClick = (path, section) => {
     if (location.pathname === "/" && section) {
@@ -40,6 +30,11 @@ export const Navbar = () => {
       navigate(path);
     }
   };
+
+  const handleLogout = () => {
+    logout();
+    window.location.reload();
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark fixed-top p-3">
@@ -84,17 +79,18 @@ export const Navbar = () => {
             >
               Profile
             </a>
-            {token ? (
+            {loggedIn ? (
               <>
                 <button
-                  className="nav-link mx-5 btn btn-link small-nav-item"
                   onClick={handleLogout}
+                  className="nav-link mx-5 btn btn-link small-nav-item"
                 >
                   Logout
                 </button>
-                <div className="small-nav-item nav-item text-light ms-3">
-                  {token.sub}
+                <div className="nav-link small-nav-item">
+                  {username}!
                 </div>
+                
               </>
             ) : (
               <>

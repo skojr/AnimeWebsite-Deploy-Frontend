@@ -1,190 +1,104 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+const SPRING_BOOT_API_URL = import.meta.env.VITE_API_URL;
 
-// User Login
-export const login = async (email, password) => {
+if (!SPRING_BOOT_API_URL) {
+  throw new Error("VITE_API_URL is not defined in your environment variables.");
+}
+
+export const register = async (user) => {
   try {
-    // Ensure no old token is sent
-    const response = await axios.post(baseUrl + "/users/auth/authenticate", {
-      email,
-      password,
-    });
-    console.log("Login response:", response.data);
-    if (response.data.token) {
-      localStorage.setItem("token", response.data.token);
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`;
-    }
-    // localStorage.setItem("userId:", response.data.id)
-    return response.data;
+    await axios.post(`${SPRING_BOOT_API_URL}/auth/register`, user);
+    return await login(user);
   } catch (error) {
-    console.error(
-      "Login error:",
-      error.response ? error.response.data : error.message
-    );
+    console.error("Registration failed:", error);
     throw error;
   }
 };
 
-export const register = async (email, password) => {
+export const login = async (user) => {
   try {
-    await axios.post(baseUrl + "/users/auth/register", { email, password });
-    login(email, password);
-  } catch (error) {
-    console.error("Full error object:", error);
-    if (error.response) {
-      throw new Error(
-        error.response.data.message || `Error: ${error.response.status}`
-      );
-    } else if (error.request) {
-      throw new Error("No response received from server");
+    const response = await axios.post(`${SPRING_BOOT_API_URL}/auth/login`, user);
+    const data = response.data;
+    const token = data.token;
+    if (token) {
+      localStorage.setItem("token", token);
+      console.log("JWT Token stored successfully.");
     } else {
-      throw new Error("Error setting up the request");
+      console.warn("No token received during login.");
     }
-  }
-};
 
-// Check if user is authenticated
-export const checkAuth = async () => {
-  try {
-    const response = await apiClient.get("api/users/auth/check");
-
-    // You can shape this however you want, but let's assume:
-    // { loggedIn: true, username, userId, role }
-    return response.data;
+    return data;
   } catch (error) {
-    console.error("Auth check failed:", error.response?.data || error.message);
-    return { loggedIn: false };
+    console.error("Login failed:", error);
+    throw error; // ✅ Properly propagate error
   }
-};
-
-// User Logout
-export const logout = async () => {
-  try {
-    localStorage.clear();
-    // localStorage.removeItem("userId");
-    localStorage.removeItem("token");
-    sessionStorage.clear();
-    window.location.reload();
-  } catch (error) {
-    console.error("Logout error:", error);
-  }
-};
-
-export const getCurrentUser = () => {
-  const token = localStorage.getItem("token");
-  if (!token) return null;
-  try {
-    console.log(jwtDecode(token));
-    return jwtDecode(token);
-  } catch (error) {
-    console.error("Error decoding token:", error);
-    return null;
-  }
-};
-
-export const deleteUser = async (password) => {
-  const token = localStorage.getItem("token");
-  const decodedToken = jwtDecode(token);
-
-  if (!token || !decodedToken) {
-    throw new Error("User not authenticated");
-  }
-
-  const userId = decodedToken.userId; // Make sure this matches the property name in your token
-
-  try {
-    const response = await axios.delete(`${baseUrl}/users/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      data: { password }, // Send password in the request body
-    });
-
-    console.log("Response:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error("Delete user error:", error.response || error);
-    throw new Error(
-      error.response?.data || error.message || "Failed to delete user"
-    );
-  }
-};
-
-export const updateUser = async (updateData) => {
-  const decodedToken = getCurrentUser();
-  const originalToken = localStorage.getItem("token");
-
-  if (!decodedToken || !originalToken) {
-    throw new Error("User not authenticated");
-  }
-
-  const userId = decodedToken.userId; // Make sure this matches the property name in your token
-
-  try {
-    const response = await axios.put(`${baseUrl}/users/${userId}`, updateData, {
-      headers: {
-        Authorization: `Bearer ${originalToken}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    console.log("Response:", response.data);
-    return response.data;
-  } catch (error) {
-    if (error.response) {
-      console.error("Error response:", error.response.data);
-      throw new Error(error.response.data.message || "Failed to update user");
-    } else if (error.request) {
-      console.error("No response received from server:", error.request);
-      throw new Error("No response received from server");
-    } else {
-      console.error("Error setting up the request:", error.message);
-      throw new Error("Error in setting up the request");
-    }
-  }
-};
-
-const map = {
-  Short: 12,
-  Medium: 13,
-  Long: 25,
-};
-
-export const fetchSurveyData = async (genreId, lengthCategory) => {
-  const response = await axios.get(
-    `https://api.jikan.moe/v4/anime?genres=${genreId}&order_by=popularity`
-  );
-  const data = response.data.data;
-  // const filteredByLength = response.data.data.filter(anime => {
-  //   switch(lengthCategory) {
-  //     case 'short':
-  //       return anime.episodes > 0 && anime.episodes <= 12;
-  //     case 'medium':
-  //       return anime.episodes > 12 && anime.episodes <= 24;
-  //     case 'long':
-  //       return anime.episodes > 24;
-  //     default:
-  //       return true;
-  //   }
-  // });
-
-  return data; // Return top 5
 };
 
 export const isAuthenticated = () => {
   const token = localStorage.getItem("token");
   if (!token) return false;
+
   try {
-    const decodedToken = jwtDecode(token);
-    const currentTime = Date.now() / 1000;
-    return decodedToken.exp > currentTime;
-  } catch (error) {
+    const { exp, sub } = jwtDecode(token);
+    if (Date.now() >= exp * 1000) {
+      localStorage.removeItem("token");
+      return false;
+    }
+    return true;
+  } catch (e) {
     return false;
+  }S
+};
+
+export const logout = () => {
+  localStorage.clear();
+}
+
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+export const getUser = async () => {
+  try {
+    const response = await axios.get(`${SPRING_BOOT_API_URL}/me`, {
+      headers: getAuthHeaders(),
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    throw error;
+  }
+  
+};
+export const deleteUser = async (password) => {
+  try {
+    const response = await axios.delete(`${SPRING_BOOT_API_URL}/me`, {
+      headers: getAuthHeaders(),
+      data: { password },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to delete user:", error);
+    throw error;
   }
 };
+
+
+export const updateUser = async (updatedData) => {
+  try {
+    const response = await axios.put(`${SPRING_BOOT_API_URL}/me`, updatedData, {
+      headers: getAuthHeaders(),
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to update user:", error);
+    throw error;
+  }
+};
+

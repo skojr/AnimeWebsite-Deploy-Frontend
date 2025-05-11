@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import './UpdateUserModal.css'; // Importing the CSS file
 
 const UpdateUserModal = ({ isOpen, onClose, onUpdate, error }) => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   if (!isOpen) return null;
@@ -13,30 +12,26 @@ const UpdateUserModal = ({ isOpen, onClose, onUpdate, error }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!email && !newPassword) {
-      alert("Please fill either email or new password to update.");
+    if (!username && !newPassword) {
+      alert("Please fill either username and/or new password to update.");
       return;
     }
 
-    if (email && !password) {
-      alert("Password is required to update email.");
+    if (username && !password) {
+      alert("Password is required to update username.");
       return;
     }
 
-    if (newPassword && !oldPassword) {
+    if (newPassword && !password) {
       alert("Old password is required to update password.");
       return;
     }
 
     const updateData = {};
-    if (email) {
-      updateData.email = email;
-      updateData.password = password;
-    }
-    if (newPassword) {
-      updateData.oldPassword = oldPassword;
-      updateData.newPassword = newPassword;
-    }
+    updateData.newUsername = username;
+    updateData.password = password;
+    updateData.newPassword = newPassword;
+    console.log(updateData);
     onUpdate(updateData);
   };
 
@@ -47,32 +42,22 @@ const UpdateUserModal = ({ isOpen, onClose, onUpdate, error }) => {
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email" className='me-2 fs-4'>New Email:</label>
+            <label htmlFor="username" className='me-2 fs-4'>New Username:</label>
             <input
-              type="email" 
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="username" 
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          {email && (
-            <div className='my-2'>
-              <label htmlFor="password" className='fs-4'>Current Password (required for email update):</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          )}
+
           <div className='my-2'>
-            <label htmlFor="oldPassword" className='fs-4'>Current Password (if changing password):</label>
+            <label htmlFor="password" className='fs-4'>Current Password (Required for username and/or password change):</label>
             <input
               type="password"
-              id="oldPassword"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className='my-2'>

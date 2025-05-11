@@ -1,72 +1,85 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register, login } from "./AuthService";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-// Change
-import "./SignUp.css";
+import { register } from "./AuthService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./Auth.css";
 
 export const SignUp = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    try {
-      await register(email, password);
-      toast.success("Signed up successfully!")
-      setTimeout(() => {
-        navigate("/", { replace: true });
-        window.location.reload();
-      }, 3000);
-      const loginResponse = await login(email, password);
-      return loginResponse;
-    } catch (error) {
-      toast.error("Registration failed" + error);
-    }
 
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "username") setUsername(value);
+    if (name === "password") setPassword(value);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await register({ username, password });
+      toast.success("Signed up successfully!");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } catch (error) {
+      toast.error("Registration failed. Please try again.");
+    }
+  };
   return (
-    <div className="signup-container">
-      <div className="signup-overlay"></div>
-      <div className="form-container">
-        <form className="form" onSubmit={handleSignUp}>
-          <h1 className="form-header">Sign Up</h1>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+    <div className="auth-container d-flex justify-content-center align-items-center vh-100">
+      <form
+        onSubmit={handleSubmit}
+        className="p-4 rounded shadow-lg bg-dark text-light"
+        style={{
+          maxWidth: "400px",
+          width: "100%",
+          transform: "scale(1.7)",
+          transformOrigin: "center",
+        }}
+      >
+        <h2 className="text-center mb-4">Sign Up</h2>
 
-          <button type="submit" className="form-btn btn btn-primary">
-            Sign Up
-          </button>
-        </form>
-      </div>
-      <ToastContainer position="top-right" autoClose={3000} />
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label fs-5">
+            Username
+          </label>
+          <input
+            onChange={handleChange}
+            name="username"
+            type="text"
+            value={username}
+            id="username"
+            placeholder="Enter username"
+            className="form-control fs-5"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label fs-5">
+            Password
+          </label>
+          <input
+            onChange={handleChange}
+            name="password"
+            type="password"
+            value={password}
+            id="password"
+            placeholder="Enter password"
+            className="form-control fs-5"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="btn btn-primary w-100 fs-5"
+        >
+          Sign Up
+        </button>
+      </form>
     </div>
   );
 };
