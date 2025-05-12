@@ -36,7 +36,7 @@ export const EditPost = () => {
       toast.success("Post updated successfully!");
       setTimeout(() => {
         navigate("/posts/my-posts"); // Redirect to the posts page
-      }, 2000);
+      }, 1500);
     } catch (error) {
       console.error("Failed to update post:", error);
       toast.error("Failed to update post.");

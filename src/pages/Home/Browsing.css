@@ -43,3 +43,8 @@
   margin-bottom: 20%;
   cursor: pointer;
 }
+
+.carousel-button {
+  border-radius: 10%;
+}
+

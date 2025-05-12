@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Hero.css";
 import { scroller } from "react-scroll";
+import { isAuthenticated } from "../../auth/AuthService";
 
 export const Hero = () => {
   const navigate = useNavigate();
+  const authenticated = isAuthenticated();
 
   const handleButtonClick = (section) => {
     scroller.scrollTo(section, {
@@ -14,14 +16,6 @@ export const Hero = () => {
 
   const handleSurveyClick = () => {
     navigate("/profile"); // Redirect to Profile page
-  };
-
-  const handleCreatePostClick = () => {
-    navigate("/posts/create-post");
-  };
-
-  const handleViewPostsClick = () => {
-    navigate("/posts/my-posts");
   };
 
   return (
@@ -59,51 +53,52 @@ export const Hero = () => {
               <div className="card">
                 <div className="card-body">
                   <i className="card-logo fa-solid fa-pencil"></i>
-                  <div className="card-title">TALKE WITH OTHERS</div>
+                  <div className="card-title">TALK WITH OTHERS</div>
                   <div className="card-info">
                     <p>
-                      Create posts and share with other users to discuss about
-                      anime!
+                      Create posts and share with other users to discuss anime!
                     </p>
-                    <button
+                    <Link
+                      to="/posts/create-post"
                       type="button"
                       className="card-btn btn btn-light mx-2"
                       style={{
-                        fontSize: "2rem",
-                        height: "5.5rem",
+                        fontSize: authenticated ? "1.5rem" : "2rem",
+                        height: authenticated ? "4rem" : "5.5rem",
                         width: "auto",
-                        marginTop: "5rem",
+                        marginTop: authenticated ? "1rem" : "5rem",
                       }}
-                      onClick={handleCreatePostClick}
                     >
                       CREATE POSTS
-                    </button>
-                    <button
-                      type="button"
-                      className="card-btn btn btn-light mx-2"
-                      style={{
-                        fontSize: "2rem",
-                        height: "5.5rem",
-                        width: "auto",
-                        marginTop: "5rem",
-                      }}
-                      onClick={handleViewPostsClick}
-                    >
-                      VIEW MY POSTS
-                    </button>
-                    <Link
-                    to="/posts/all-posts"
-                      type="button"
-                      className="card-btn btn btn-light mx-2"
-                      style={{
-                        fontSize: "2rem",
-                        height: "5.5rem",
-                        width: "auto",
-                        marginTop: "5rem",
-                      }}
-                    >
-                      VIEW ALL POSTS
                     </Link>
+                    <Link
+                      to="/posts/all-posts"
+                      type="button"
+                      className="card-btn btn btn-light mx-2"
+                      style={{
+                        fontSize: authenticated ? "1.5rem" : "2rem",
+                        height: authenticated ? "4rem" : "5.5rem",
+                        width: "auto",
+                        marginTop: authenticated ? "1rem" : "5rem",
+                      }}
+                    >
+                      VIEW POSTS
+                    </Link>
+                    {authenticated && (
+                      <Link
+                        to="/posts/my-posts"
+                        type="button"
+                        className="card-btn btn btn-light mx-2"
+                        style={{
+                          fontSize: "1.5rem",
+                          height: "4rem",
+                          width: "auto",
+                          marginTop: "1rem",
+                        }}
+                      >
+                        VIEW MY POSTS
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

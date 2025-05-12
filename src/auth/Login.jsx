@@ -24,7 +24,7 @@ export const Login = () => {
       toast.success("Logged in successfully!");
       setTimeout(() => {
         navigate("/");
-      }, 3000);
+      }, 1500);
     } catch (error) {
       toast.error("Login failed. Please try again.");
     }

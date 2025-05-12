@@ -53,7 +53,7 @@ export const Profile = () => {
       setTimeout(() => {
         navigate("/", { replace: true });
         window.location.reload();
-      }, 3000);
+      }, 1500);
     } catch (error) {
       console.error("Error deleting account:", error);
       toast.error("Incorrect password.");
@@ -71,7 +71,7 @@ export const Profile = () => {
       logout();
       setTimeout(() => {
         navigate("/login", { replace: true });
-      }, 3000);
+      }, 1500);
     } catch (error) {
       console.error("Error updating account:", error);
       toast.error("Failed to update account.");
@@ -199,7 +199,7 @@ export const Profile = () => {
         onSubmit={handleSurveySubmit}
       />
 
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={1500} />
     </div>
   );
 };

@@ -15,7 +15,7 @@ export const isAuthenticated = () => {
 
   try {
     const { exp, sub } = jwtDecode(token);
-    if (Date.now() >= exp * 1000) {
+    if (Date.now() >= exp * 1500) {
       localStorage.removeItem("token");
       return false;
     }
@@ -64,10 +64,10 @@ export const getPost = async (id) => {
   }
 };
 
-export const getAllPosts = async () => {
+export const getAllPosts = async (page=0, size=4) => {
   try {
     const response = await axios.get(
-      `${SPRING_BOOT_API_URL}/posts/get-all-posts`,
+      `${SPRING_BOOT_API_URL}/posts/get-all-posts?page=${page}&size=${size}`,
       {
         headers: getAuthHeaders(),
       }
@@ -78,10 +78,10 @@ export const getAllPosts = async () => {
   }
 };
 
-export const getMyPosts = async () => {
+export const getMyPosts = async (page=0, size=4) => {
   try {
     const response = await axios.get(
-      `${SPRING_BOOT_API_URL}/posts/get-my-posts`,
+      `${SPRING_BOOT_API_URL}/posts/get-my-posts?page=${page}&size=${size}`,
       {
         headers: getAuthHeaders(),
       }

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllPosts } from "../../auth/AuthService";
+import { getAllPosts, getMyPosts } from "../../auth/AuthService";
 import { PostCards } from "./PostCards";
 import "./Posts.css";
+import { MyPostCards } from "./MyPostCards";
 
-export const ViewAllPosts = () => {
+export const ViewMyPosts = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -11,7 +12,7 @@ export const ViewAllPosts = () => {
 
   const fetchPosts = async (page) => {
     try {
-      const data = await getAllPosts(page, postsPerPage);
+      const data = await getMyPosts(page, postsPerPage);
       setPosts(data.content);
       setTotalPages(data.totalPages);
       setCurrentPage(data.number);
@@ -68,7 +69,7 @@ export const ViewAllPosts = () => {
         {posts.length > 0 ? (
           posts.map((post) => (
             <div key={post.id} className="col-lg-12 col-md-12">
-              <PostCards post={post} />
+              <MyPostCards post={post} />
             </div>
           ))
         ) : (

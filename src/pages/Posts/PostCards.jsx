@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { deletePost } from "../../auth/AuthService";
 import { toast } from "react-toastify";
+import './Posts.css';
 
 export const PostCards = ({ post }) => {
   const { title, content, id, createdAt, username } = post;
@@ -10,72 +11,39 @@ export const PostCards = ({ post }) => {
     try {
       await deletePost(id);
       toast.success("Post deleted successfully!");
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      setTimeout(() => window.location.reload(), 2000);
     } catch (error) {
-        toast.error(error);
+      toast.error(error);
     }
   };
 
   return (
-    <div
-      className="card mb-3"
-      style={{
-        maxWidth: "100%",
-        margin: "0 auto",
-        backgroundColor: "#1e1e2f",
-        color: "#d1d1e9",
-        border: "1px solid #6c63ff",
-        borderRadius: "8px",
-      }}
-    >
-      <div className="card-body">
-        <h5
-          className="card-title"
-          style={{
-            color: "#6c63ff",
-            fontWeight: "bold",
-          }}
-        >
-          {username}: {title}
-        </h5>
-        <p
-          className="card-text mt-5"
-          style={{
-            fontSize: "1.7rem",
-            color: "#a1a1b5",
-          }}
-        >
-          {new Date(createdAt).toLocaleString()}
-        </p>
-        <p
-          className="card-text"
-          style={{ fontSize: "1.8rem", marginTop: "3rem" }}
-        >
-          {content}
-        </p>
-      </div>
-
-      <Link
-        to={`/posts/edit-post/${id}`}
-        className="btn btn-primary mt-3"
-        style={{
-          fontSize: "2rem",
-        }}
-      >
-        Edit
-      </Link>
-
-      <button
-        className="btn btn-danger mt-3"
-        style={{
-          fontSize: "2rem",
-        }}
-        onClick={handleDeleteClick}
-      >
-        Delete Post
-      </button>
+    <div className="post-card bg-dark p-4">
+      <p className="mb-2 fs-4">
+        Posted {timeSince(new Date(createdAt))} ago
+      </p>
+      <h3 className="post-title mb-3">{title}</h3>
+      <p className="post-content mb-3 fs-3">{content}</p>
+      <p className="mb-3 text-secondary fs-3">By {username}</p>
     </div>
   );
+};
+
+// Helper function to format time difference
+const timeSince = (date) => {
+  const seconds = Math.floor((new Date() - date) / 1500);
+  const intervals = [
+    { label: "year", value: 31536000 },
+    { label: "month", value: 2592000 },
+    { label: "week", value: 604800 },
+    { label: "day", value: 86400 },
+    { label: "hour", value: 3600 },
+    { label: "minute", value: 60 },
+  ];
+
+  for (let interval of intervals) {
+    const count = Math.floor(seconds / interval.value);
+    if (count > 0) return `${count} ${interval.label}${count !== 1 ? "s" : ""}`;
+  }
+  return "just now";
 };

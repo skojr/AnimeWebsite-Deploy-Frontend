@@ -111,7 +111,7 @@ export const Browsing = () => {
             data-bs-slide="prev"
           >
             <span
-              className="carousel-control-prev-icon"
+              className="carousel-button bg-secondary p-4 carousel-control-prev-icon"
               aria-hidden="true"
             ></span>
             <span className="visually-hidden">Previous</span>
@@ -124,7 +124,7 @@ export const Browsing = () => {
             data-bs-slide="next"
           >
             <span
-              className="carousel-control-next-icon"
+              className="carousel-button bg-secondary p-4 carousel-control-next-icon"
               aria-hidden="true"
             ></span>
             <span className="visually-hidden">Next</span>

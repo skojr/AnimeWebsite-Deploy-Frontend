@@ -22,7 +22,7 @@ export const CreatePost = () => {
     toast.success("Created post successfully!");
     setTimeout(() => {
       navigate("/");
-    }, 2000);
+    }, 1500);
     } catch (error) {
         toast.error(error);
     }

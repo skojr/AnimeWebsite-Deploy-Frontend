@@ -24,7 +24,7 @@ export const SignUp = () => {
       toast.success("Signed up successfully!");
       setTimeout(() => {
         navigate("/");
-      }, 3000);
+      }, 1500);
     } catch (error) {
       toast.error("Registration failed. Please try again.");
     }

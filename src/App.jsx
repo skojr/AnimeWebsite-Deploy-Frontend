@@ -9,7 +9,7 @@ import { SignUp } from "./auth/SignUp";
 import { Profile } from "./pages/Profile/Profile";
 import { CreatePost } from "./pages/Posts/CreatePost";
 import { EditPost } from "./pages/Posts/EditPost";
-import { MyPosts } from "./pages/Posts/MyPosts";
+import { ViewMyPosts } from "./pages/Posts/ViewMyPosts";
 import React, { useState, useEffect } from "react";
 import ProtectedRoute from "./auth/ProtectedRoutes";
 import { ViewAllPosts } from "./pages/Posts/ViewAllPosts";
@@ -43,7 +43,7 @@ function App() {
           path="/posts/my-posts"
           element={
             <ProtectedRoute>
-              <MyPosts />
+              <ViewMyPosts />
             </ProtectedRoute>
           }
         />
