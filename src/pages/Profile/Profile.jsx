@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { DeleteConfirmationModal } from "../../auth/DeletionConfirmationModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UpdateUserModal from "../../auth/UpdateUserModal";
 import AnimeSurveyModal from "./AnimeModalSurvey";
 import pfpImg from "../../assets/pfpImg.jpg";
@@ -158,6 +158,12 @@ export const Profile = () => {
                 >
                   Take Survey
                 </button>
+                <Link
+                  className="btn btn-primary custom-btn mb-3 fs-2"
+                  to="/posts/my-posts"
+                >
+                  View My Posts
+                </Link>
                 {animeRecommendations.length > 0 && (
                   <div>
                     <h6 className="fs-3">Your Recommendations:</h6>

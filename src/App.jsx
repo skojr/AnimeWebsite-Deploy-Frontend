@@ -7,8 +7,12 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { Login } from "./auth/Login";
 import { SignUp } from "./auth/SignUp";
 import { Profile } from "./pages/Profile/Profile";
+import { CreatePost } from "./pages/Posts/CreatePost";
+import { EditPost } from "./pages/Posts/EditPost";
+import { MyPosts } from "./pages/Posts/MyPosts";
 import React, { useState, useEffect } from "react";
 import ProtectedRoute from "./auth/ProtectedRoutes";
+import { ViewAllPosts } from "./pages/Posts/ViewAllPosts";
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +27,41 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/posts/create-post"
+          element={
+            <ProtectedRoute>
+              <CreatePost />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/posts/my-posts"
+          element={
+            <ProtectedRoute>
+              <MyPosts />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/posts/all-posts"
+          element={
+            <ProtectedRoute>
+              <ViewAllPosts />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/posts/edit-post/:id"
+          element={
+            <ProtectedRoute>
+              <EditPost />
             </ProtectedRoute>
           }
         />
