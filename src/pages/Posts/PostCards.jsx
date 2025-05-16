@@ -19,33 +19,10 @@ export const PostCards = ({ post }) => {
 
   return (
     <div className="post-card bg-dark p-4">
-      <p className="mb-2 fs-4">Posted {timeSince(createdAt)} ago</p>
+      <p className="mb-2 fs-4">Posted {createdAt.slice(0, 10)}</p>
       <h3 className="post-title mb-3">{title}</h3>
       <p className="post-content mb-3 fs-3">{content}</p>
       <p className="mb-3 text-secondary fs-3">By {username}</p>
     </div>
   );
-};
-
-// Helper function to format time difference
-const timeSince = (dateString) => {
-  // Replace space with 'T' for ISO format compatibility
-  const date = new Date(dateString.replace(" ", "T"));
-  const seconds = Math.floor((new Date() - date) / 1000);
-  const intervals = [
-    { label: "year", value: 31536000 },
-    { label: "month", value: 2592000 },
-    { label: "week", value: 604800 },
-    { label: "day", value: 86400 },
-    { label: "hour", value: 3600 },
-    { label: "minute", value: 60 },
-  ];
-
-  for (let interval of intervals) {
-    const count = Math.floor(seconds / interval.value);
-    if (count > 0) {
-      return `${count} ${interval.label}${count !== 1 ? "s" : ""}`;
-    }
-  }
-  return "just now";
 };
