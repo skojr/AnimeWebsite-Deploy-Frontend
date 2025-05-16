@@ -29,7 +29,7 @@ export const PostCards = ({ post }) => {
 
 // Helper function to format time difference
 const timeSince = (date) => {
-  const seconds = Math.floor((new Date() - date) / 1500);
+  const seconds = Math.floor((new Date() - date) / 1000);
   const intervals = [
     { label: "year", value: 31536000 },
     { label: "month", value: 2592000 },
@@ -41,6 +41,9 @@ const timeSince = (date) => {
 
   for (let interval of intervals) {
     const count = Math.floor(seconds / interval.value);
-    return `${count} ${interval.label}${count !== 1 ? "s" : ""}`;
+    if (count > 0) {
+      return `${count} ${interval.label}${count !== 1 ? "s" : ""}`;
+    }
   }
+  return "just now";
 };
