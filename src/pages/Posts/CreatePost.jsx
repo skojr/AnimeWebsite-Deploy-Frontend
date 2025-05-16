@@ -71,6 +71,7 @@ export const CreatePost = () => {
             className="form-control"
             rows="5"
             placeholder="Write your post content here..."
+            maxLength={250}
           ></textarea>
         </div>
 
