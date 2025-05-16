@@ -13,6 +13,15 @@ import { ViewMyPosts } from "./pages/Posts/ViewMyPosts";
 import React, { useState, useEffect } from "react";
 import ProtectedRoute from "./auth/ProtectedRoutes";
 import { ViewAllPosts } from "./pages/Posts/ViewAllPosts";
+import ChatBot from "./pages/ChatBot/ChatBot";
+const steps = [
+    {
+        id: '0',
+        message: 'Hey! Ask me for an anime recommendation!',
+        end: true
+    }
+];
+
 function App() {
   return (
     <BrowserRouter>
@@ -62,6 +71,15 @@ function App() {
           element={
             <ProtectedRoute>
               <EditPost />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/chatbot"
+          element={
+            <ProtectedRoute>
+              <ChatBot />
             </ProtectedRoute>
           }
         />

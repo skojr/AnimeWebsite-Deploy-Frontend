@@ -15,7 +15,7 @@ export const isAuthenticated = () => {
 
   try {
     const { exp, sub } = jwtDecode(token);
-    if (Date.now() >= exp * 1500) {
+    if (Date.now() >= exp * 1000) {
       localStorage.removeItem("token");
       return false;
     }
@@ -23,7 +23,6 @@ export const isAuthenticated = () => {
   } catch (e) {
     return false;
   }
-  S;
 };
 
 export const logout = () => {

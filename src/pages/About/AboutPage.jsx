@@ -24,8 +24,8 @@ export const AboutPage = () => {
           </div>
           <div className="col-md-6">
             <div className="about-synopsis-container">
-              <h1 className="synopsis-title">Synopsis</h1>
-              <p className="synopsis-text">{anime.synopsis}</p>
+              <h1 className="synopsis-title fs-3">Synopsis</h1>
+              <p className="synopsis-text fs-5">{anime.synopsis}</p>
             </div>
           </div>
         </div>

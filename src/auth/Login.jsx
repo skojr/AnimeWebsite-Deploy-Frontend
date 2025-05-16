@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Auth.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { login } from "./AuthService";
@@ -8,6 +8,7 @@ import { login } from "./AuthService";
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,7 +39,7 @@ export const Login = () => {
         style={{
           maxWidth: "400px",
           width: "100%",
-          transform: "scale(1.7)",
+          transform: "scale(1.5)",
           transformOrigin: "center",
         }}
       >
@@ -66,7 +67,7 @@ export const Login = () => {
           <input
             onChange={handleChange}
             name="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={password}
             id="password"
             placeholder="Enter password"
@@ -74,12 +75,37 @@ export const Login = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="btn btn-primary w-100 fs-5"
-        >
+        <div className="form-check mb-1 mt-0">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="showPassword"
+            checked={showPassword}
+            onChange={() => setShowPassword((prev) => !prev)}
+            style={{ marginTop: "0.2rem" }}
+          />
+          <label
+            className="form-check-label fs-5"
+            htmlFor="showPassword"
+            style={{ marginLeft: "0.5rem" }}
+          >
+            Show Password
+          </label>
+        </div>
+
+        <button type="submit" className="btn btn-primary w-100 fs-5">
           Login
         </button>
+        <p className="fs-4">Don't have an account?</p>
+        <Link
+          to="/signup"
+          className="fs-4"
+          style={{
+            color: "plum",
+          }}
+        >
+          Sign up here
+        </Link>
       </form>
     </div>
   );

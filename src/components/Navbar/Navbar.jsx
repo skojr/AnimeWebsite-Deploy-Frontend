@@ -34,7 +34,7 @@ export const Navbar = () => {
   const handleLogout = () => {
     logout();
     window.location.reload();
-  }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark fixed-top p-3">
@@ -68,8 +68,13 @@ export const Navbar = () => {
             >
               Home
             </a>
-            <a className="nav-link small-nav-item" href="#">
-              Survey
+            <a
+              className="nav-link active small-nav-item"
+              aria-current="page"
+              href="/chatbot"
+              onClick={() => handleNavClick("/chatbot", "chatbot")}
+            >
+              ChatBot
             </a>
             <a
               className="nav-link small-nav-item"
@@ -87,10 +92,7 @@ export const Navbar = () => {
                 >
                   Logout
                 </button>
-                <div className="nav-link small-nav-item">
-                  {username}!
-                </div>
-                
+                <div className="nav-link small-nav-item">{username}</div>
               </>
             ) : (
               <>
@@ -108,7 +110,7 @@ export const Navbar = () => {
                   href="/signup"
                   onClick={() => handleNavClick("/signup")}
                 >
-                  Register
+                  Signup
                 </a>
               </>
             )}

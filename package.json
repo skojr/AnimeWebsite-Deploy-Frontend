@@ -15,10 +15,12 @@
     "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-chatbotify": "^2.0.0-beta.35",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.23.1",
     "react-scroll": "^1.9.0",
+    "react-simple-chatbot": "^0.6.1",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {

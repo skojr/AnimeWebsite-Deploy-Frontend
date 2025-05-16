@@ -75,7 +75,7 @@ export const CreatePost = () => {
         </div>
 
         <button type="submit" className="btn btn-primary w-100 fs-5">
-          Submit
+          Post
         </button>
       </form>
     </div>

@@ -15,7 +15,7 @@ export const Hero = () => {
   };
 
   const handleSurveyClick = () => {
-    navigate("/profile"); // Redirect to Profile page
+    navigate("/chatbot"); // Redirect to Profile page
   };
 
   return (
@@ -53,7 +53,7 @@ export const Hero = () => {
               <div className="card">
                 <div className="card-body">
                   <i className="card-logo fa-solid fa-pencil"></i>
-                  <div className="card-title">TALK WITH OTHERS</div>
+                  <div className="card-title">SHARE YOUR THOUGHTS</div>
                   <div className="card-info">
                     <p>
                       Create posts and share with other users to discuss anime!
@@ -63,7 +63,7 @@ export const Hero = () => {
                       type="button"
                       className="card-btn btn btn-light mx-2"
                       style={{
-                        fontSize: authenticated ? "1.5rem" : "2rem",
+                        fontSize: authenticated ? "2rem" : "2rem",
                         height: authenticated ? "4rem" : "5.5rem",
                         width: "auto",
                         marginTop: authenticated ? "1rem" : "5rem",
@@ -76,7 +76,7 @@ export const Hero = () => {
                       type="button"
                       className="card-btn btn btn-light mx-2"
                       style={{
-                        fontSize: authenticated ? "1.5rem" : "2rem",
+                        fontSize: authenticated ? "2rem" : "2rem",
                         height: authenticated ? "4rem" : "5.5rem",
                         width: "auto",
                         marginTop: authenticated ? "1rem" : "5rem",
@@ -90,7 +90,7 @@ export const Hero = () => {
                         type="button"
                         className="card-btn btn btn-light mx-2"
                         style={{
-                          fontSize: "1.5rem",
+                          fontSize: "2rem",
                           height: "4rem",
                           width: "auto",
                           marginTop: "1rem",
@@ -107,19 +107,18 @@ export const Hero = () => {
             <div className="col-md-6">
               <div className="card">
                 <div className="card-body">
-                  <i className="card-logo fa-solid fa-magnifying-glass"></i>
-                  <div className="card-title">ANIME SURVEY</div>
+                  <i className="card-logo fa-solid fa-robot"></i>
+                  <div className="card-title">CHATBOT</div>
                   <div className="card-info">
                     <p>
-                      Take our short survey to discover a collection of anime
-                      that will align most with your taste and interests.
+                      Ask Yuko's ChatBot for an anime recommendations and explore new titles!
                     </p>
                     <button
                       type="button"
                       className="card-btn btn btn-light fs-1"
                       onClick={handleSurveyClick}
                     >
-                      TAKE SURVEY
+                      ASK OUR CHATBOT
                     </button>
                   </div>
                 </div>

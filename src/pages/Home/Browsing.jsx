@@ -13,7 +13,6 @@ export const Browsing = () => {
       try {
         const response = await axios.get("https://api.jikan.moe/v4/top/anime?filter=bypopularity");
         const data = response.data;
-        console.log(data);
 
         const uniqueTitles = new Set();
         let AotIncluded = false;

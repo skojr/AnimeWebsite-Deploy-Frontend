@@ -39,7 +39,7 @@ export const ViewMyPosts = () => {
           <div className="pagination-controls bg-dark rounded p-3 mt-5">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
-              className="btn btn-secondary mx-1"
+              className="btn btn-secondary mx-1 fs-3"
               disabled={currentPage === 0}
             >
               Previous
@@ -49,7 +49,7 @@ export const ViewMyPosts = () => {
               <button
                 key={num}
                 onClick={() => handlePageChange(num)}
-                className={`btn mx-1 ${
+                className={`btn mx-1 fs-3 ${
                   currentPage === num ? "btn-primary" : "btn-outline-primary"
                 }`}
               >
@@ -59,13 +59,14 @@ export const ViewMyPosts = () => {
 
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              className="btn btn-secondary mx-1"
+              className="btn btn-secondary mx-1 fs-3"
               disabled={currentPage === totalPages - 1}
             >
               Next
             </button>
           </div>
         )}
+
         {posts.length > 0 ? (
           posts.map((post) => (
             <div key={post.id} className="col-lg-12 col-md-12">
@@ -76,6 +77,38 @@ export const ViewMyPosts = () => {
           <h5 className="text-center text-light" style={{ fontSize: "2rem" }}>
             No posts found.
           </h5>
+        )}
+
+        {totalPages > 1 && (
+          <div className="pagination-controls bg-dark rounded p-3 my-3">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              className="btn btn-secondary mx-1 fs-3"
+              disabled={currentPage === 0}
+            >
+              Previous
+            </button>
+
+            {[...Array(totalPages).keys()].map((num) => (
+              <button
+                key={num}
+                onClick={() => handlePageChange(num)}
+                className={`btn mx-1 fs-3 ${
+                  currentPage === num ? "btn-primary" : "btn-outline-primary"
+                }`}
+              >
+                {num + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              className="btn btn-secondary mx-1 fs-3"
+              disabled={currentPage === totalPages - 1}
+            >
+              Next
+            </button>
+          </div>
         )}
       </div>
     </div>

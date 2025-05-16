@@ -5,14 +5,12 @@ import {
   logout,
   getUser, // Fetches current user details
 } from "../../auth/AuthService";
-import { fetchSurveyData } from "./AnimeSurveryService";
 import { useEffect, useState } from "react";
 import { DeleteConfirmationModal } from "../../auth/DeletionConfirmationModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import UpdateUserModal from "../../auth/UpdateUserModal";
-import AnimeSurveyModal from "./AnimeModalSurvey";
 import pfpImg from "../../assets/pfpImg.jpg";
 
 export const Profile = () => {
@@ -78,31 +76,6 @@ export const Profile = () => {
     }
   };
 
-  // Handle survey submission
-  const handleSurveySubmit = async ({ genreId, length }) => {
-    try {
-      const data = await fetchSurveyData(genreId, length); // Fetch survey data
-
-      // Filter recommendations based on length
-      const recommendations = data
-        .filter((item) => {
-          const episodes = parseInt(item.episodes, 10);
-          if (isNaN(episodes)) return false;
-          return (
-            (length === "short" && episodes <= 12) ||
-            (length === "medium" && episodes > 12 && episodes <= 24) ||
-            (length === "long" && episodes > 24)
-          );
-        })
-        .slice(0, 5); // Limit to top 5 recommendations
-
-      setAnimeRecommendations(recommendations);
-      toast.success("Anime recommendations updated!");
-    } catch (error) {
-      console.error("Error fetching recommendations:", error);
-      toast.error("Failed to fetch anime recommendations.");
-    }
-  };
   
   if (loading) return <div className="text-center mt-5 fs-2">Loading...</div>;
 
@@ -142,7 +115,6 @@ export const Profile = () => {
             </div>
           </div>
 
-          {/* Anime Survey */}
           <div className="col-md-6">
             <div className="card custom-card">
               <div className="card-header gradient-header">
@@ -152,30 +124,25 @@ export const Profile = () => {
               </div>
               <div className="card-body text-center">
                 <h5 className="card-title mt-5">Find Your Anime!</h5>
-                <button
-                  className="btn btn-primary custom-btn mb-3 fs-2"
-                  onClick={() => setIsAnimeSurveyModalOpen(true)}
-                >
-                  Take Survey
-                </button>
+               
                 <Link
                   className="btn btn-primary custom-btn mb-3 fs-2"
                   to="/posts/my-posts"
                 >
                   View My Posts
                 </Link>
-                {animeRecommendations.length > 0 && (
-                  <div>
-                    <h6 className="fs-3">Your Recommendations:</h6>
-                    <ul className="">
-                      {animeRecommendations.map((anime, index) => (
-                        <li key={index} className="fs-3">
-                          {anime.title.english || anime.title.romanji}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                <Link
+                  className="btn btn-primary custom-btn mb-3 fs-2"
+                  to="/posts/all-posts"
+                >
+                  View All Posts
+                </Link>
+                <Link
+                  className="btn btn-primary custom-btn mb-3 fs-2"
+                  to="/chatbot"
+                >
+                  Ask Chatbot
+                </Link>
               </div>
             </div>
           </div>
@@ -192,11 +159,6 @@ export const Profile = () => {
         isOpen={isUpdateModalOpen}
         onClose={() => setIsUpdateModalOpen(false)}
         onUpdate={handleUpdateUser}
-      />
-      <AnimeSurveyModal
-        isOpen={isAnimeSurveyModalOpen}
-        onClose={() => setIsAnimeSurveyModalOpen(false)}
-        onSubmit={handleSurveySubmit}
       />
 
       <ToastContainer position="top-right" autoClose={1500} />
