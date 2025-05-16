@@ -4,6 +4,8 @@ import { createPost } from "../../auth/AuthService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+const CONTENT_LIMIT = 350; // set your desired limit
+
 export const CreatePost = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
@@ -71,8 +73,11 @@ export const CreatePost = () => {
             className="form-control"
             rows="5"
             placeholder="Write your post content here..."
-            maxLength={250}
+            maxLength={CONTENT_LIMIT}
           ></textarea>
+          <div className="text-end text-muted fs-6">
+            {content.length}/{CONTENT_LIMIT} characters
+          </div>
         </div>
 
         <button type="submit" className="btn btn-primary w-100 fs-5">
