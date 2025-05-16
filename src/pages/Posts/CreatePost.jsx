@@ -71,11 +71,11 @@ export const CreatePost = () => {
             className="form-control"
             rows="5"
             placeholder="Write your post content here..."
-            maxLength={300}
+            maxLength={250}
             
           ></textarea>
           <div className="text-end text-muted fs-6">
-            {content.length}/{300} characters
+            {content.length}/{250} characters
           </div>
         </div>
 
