@@ -1,0 +1,13 @@
+.app-wrapper {
+  transform-origin: top left;
+  transition: transform 0.3s ease;
+}
+
+/* Apply 50% zoom out for screens wider than 1920px (example laptop screen size) */
+@media (min-width: 1920px) {
+  .app-wrapper {
+    transform: scale(0.5);
+    width: 200%; /* Compensate for scaling down */
+    height: 200%;
+  }
+}
