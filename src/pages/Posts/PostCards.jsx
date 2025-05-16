@@ -19,7 +19,7 @@ export const PostCards = ({ post }) => {
 
   return (
     <div className="post-card bg-dark p-4">
-      <p className="mb-2 fs-4">Posted {timeSince(new Date(createdAt))} ago</p>
+      <p className="mb-2 fs-4">Posted {timeSince(createdAt)} ago</p>
       <h3 className="post-title mb-3">{title}</h3>
       <p className="post-content mb-3 fs-3">{content}</p>
       <p className="mb-3 text-secondary fs-3">By {username}</p>
@@ -28,7 +28,9 @@ export const PostCards = ({ post }) => {
 };
 
 // Helper function to format time difference
-const timeSince = (date) => {
+const timeSince = (dateString) => {
+  // Replace space with 'T' for ISO format compatibility
+  const date = new Date(dateString.replace(" ", "T"));
   const seconds = Math.floor((new Date() - date) / 1000);
   const intervals = [
     { label: "year", value: 31536000 },
