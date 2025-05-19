@@ -1,6 +1,9 @@
 # *Anime Discovery & Social Hub Frontend*
 Created by: **Samuel Obeng**
 
+## Deployment
+Deployed via Netlify **https://resilient-kitsune-47fd3d.netlify.app/**
+
 ## Features
 - View trending anime
 - Create and read community posts
